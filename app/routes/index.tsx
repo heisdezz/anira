@@ -15,7 +15,7 @@ export const meta: MetaFunction = () => {
 export default function index() {
   return (
     <>
-      <h1 className="hidden">Welcome to Anira</h1>
+      {/*<h1 className="hidden">Welcome to Anira</h1>*/}
       <ClientOnly>{() => <Hero />}</ClientOnly>
       <Trending />
     </>
