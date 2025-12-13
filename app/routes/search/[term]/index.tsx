@@ -1,5 +1,6 @@
 import { client } from "@/api/client";
 import Card from "@/components/Card";
+import EmptyList from "@/components/EmptyList";
 import GridContainer from "@/components/GridContainer";
 import SkeletonCard from "@/components/SkeletonCard";
 import type { API_RESULTS, QUERY_RESULTS } from "@/constants";
@@ -42,13 +43,17 @@ export default function index() {
         <div className="p-4 text-xl font-bold bg-base-200">
           Search Results for "{term}"
         </div>
-        <GridContainer totalPages={query.data.totalPages}>
-          {query.data.results.map((item) => {
-            return <Card post={item} key={item.id} />;
-          })}
-        </GridContainer>
+        <div className="min-h-[520px]">
+          <EmptyList list={query.data.results} />
+
+          <GridContainer totalPages={query.data.totalPages}>
+            {query.data.results.map((item) => {
+              return <Card post={item} key={item.id} />;
+            })}
+          </GridContainer>
+        </div>
       </div>
-      sss <>s</>
+      {/*sss <>s</>*/}
     </div>
   );
 }

@@ -9,7 +9,7 @@ export default function TvRelatedShows({
   return (
     <div className="mt-4 p-4 bg-base-200">
       <div className="text-xl font-bold mb-4">Related Shows</div>
-      <div className="p-2 grid-cols-[repeat(auto-fit,minmax(150px,1fr))] md:grid-cols-[repeat(auto-fit,minmax(200px,1fr))] grid gap-4 rounded-md">
+      <div className="p-2 grid-cols-[repeat(auto-fill,minmax(150px,auto))] md:grid-cols-[repeat(auto-fill,minmax(200px,auto))] grid gap-4 rounded-md">
         {shows.map((show) => {
           return <Card post={show} key={show.id} />;
         })}

@@ -27,7 +27,7 @@ export default function TvEpisodesList({
   return (
     <div className="mt-4 space-y-4 bg-base-200 p-4 rounded-md">
       <h2 className="text-lg ">Episodes</h2>
-      <div className="grid grid-cols-[repeat(auto-fit,100px)] justify-evenly gap-2">
+      <div className="grid grid-cols-[repeat(auto-fit,100px)]  gap-2">
         {currentEpisodes.map((episode) => {
           if (episode.number === parseInt(number)) {
             return (
