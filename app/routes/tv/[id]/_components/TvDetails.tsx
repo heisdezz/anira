@@ -48,10 +48,9 @@ export default function TvDetails({ info }: { info: TV_INFO_INTERFACE }) {
       const id = user.id + parseInt(episode);
 
       try {
-        // Check if record exists
         const existing = await pb.collection("history").getOne(id);
 
-        // If it exists, update it
+        // Update if exists
         return await pb.collection("history").update<HistoryModel>(id, {
           user_id: user.id,
           url: url.pathname,
@@ -62,27 +61,34 @@ export default function TvDetails({ info }: { info: TV_INFO_INTERFACE }) {
           episode_id: episode,
         });
       } catch (err) {
-        // If not found, create it
-        if (err instanceof ClientResponseError && err.status === 404) {
-          return await pb.collection("history").create<HistoryModel>({
-            id,
-            user_id: user.id,
-            url: url.pathname,
-            title: info.title,
-            info_id: info.id,
-            img_url: info.image,
-            episode_number: number,
-            episode_id: episode,
-          });
+        if (err instanceof ClientResponseError) {
+          if (err.status === 404) {
+            // create new record
+            return await pb.collection("history").create<HistoryModel>({
+              id,
+              user_id: user.id,
+              url: url.pathname,
+              title: info.title,
+              info_id: info.id,
+              img_url: info.image,
+              episode_number: number,
+              episode_id: episode,
+            });
+          } else if (err.status === 403) {
+            console.warn(
+              "Forbidden: you don't have permission to access this record",
+            );
+            return null; // stop mutation, don’t retry
+          }
         }
-        throw err; // re-throw other errors
+        throw err; // rethrow other errors
       }
     },
     onError: (err) => console.error("PocketBase error:", err),
   });
 
   const { time } = useTimer({
-    initialTime: 5,
+    initialTime: 30,
     onTimerEnd: () => {
       if (!mutation.isPending && !mutation.isSuccess) {
         mutation.mutateAsync();
@@ -93,7 +99,7 @@ export default function TvDetails({ info }: { info: TV_INFO_INTERFACE }) {
   return (
     <>
       <div className="flex mt-4 via-transparent rounded-md flex-col md:flex-row bg-gradient-to-t from-base-300 ">
-        {time}
+        {/*{time}*/}
         <div className="mx-auto w-fit ">
           {/*<button
             className="btn btn-block mt-4 btn-primary"
