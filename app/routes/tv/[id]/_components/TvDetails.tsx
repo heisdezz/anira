@@ -5,7 +5,6 @@ import type { HistoryModel } from "@/helpers/types";
 import { useMutation } from "@tanstack/react-query";
 import { Bookmark } from "lucide-react";
 import { ClientResponseError } from "pocketbase";
-import { useEffect } from "react";
 import { useLocation, useParams } from "react-router";
 import { useTimer } from "react-timer-hook-ts";
 
@@ -13,44 +12,88 @@ export default function TvDetails({ info }: { info: TV_INFO_INTERFACE }) {
   const [user] = useUser();
   const { episode, number } = useParams();
   const url = useLocation();
+  // const mutation = useMutation({
+  //   mutationFn: async () => {
+  //     if (!user) return;
+  //     const id = user.id + parseInt(episode);
+  //     let resp = await pb
+  //       .collection("history")
+  //       .getOne(id)
+  //       .catch((err) => {
+  //         if (err instanceof ClientResponseError) {
+  //           if (err.status == 404) {
+  //             return;
+  //           }
+  //         }
+  //         throw err;
+  //       });
+  //     if (resp) return;
+  //     return await pb.collection("history").create<HistoryModel>({
+  //       id: id,
+  //       user_id: user.id,
+  //       url: url.pathname,
+  //       title: info.title,
+  //       info_id: info.id,
+  //       img_url: info.image,
+  //       episode_number: number,
+  //       episode_id: episode,
+  //     });
+  //   },
+  // });
+  //
   const mutation = useMutation({
     mutationFn: async () => {
       if (!user) return;
+
       const id = user.id + parseInt(episode);
-      let resp = await pb
-        .collection("history")
-        .getOne(id)
-        .catch((err) => {
-          if (err instanceof ClientResponseError) {
-            if (err.status == 404) {
-              return;
-            }
-          }
-          throw err;
+
+      try {
+        // Check if record exists
+        const existing = await pb.collection("history").getOne(id);
+
+        // If it exists, update it
+        return await pb.collection("history").update<HistoryModel>(id, {
+          user_id: user.id,
+          url: url.pathname,
+          title: info.title,
+          info_id: info.id,
+          img_url: info.image,
+          episode_number: number,
+          episode_id: episode,
         });
-      if (resp) return;
-      return await pb.collection("history").create<HistoryModel>({
-        id: id,
-        user_id: user.id,
-        url: url.pathname,
-        title: info.title,
-        info_id: info.id,
-        img_url: info.image,
-        episode_number: number,
-        episode_id: episode,
-      });
+      } catch (err) {
+        // If not found, create it
+        if (err instanceof ClientResponseError && err.status === 404) {
+          return await pb.collection("history").create<HistoryModel>({
+            id,
+            user_id: user.id,
+            url: url.pathname,
+            title: info.title,
+            info_id: info.id,
+            img_url: info.image,
+            episode_number: number,
+            episode_id: episode,
+          });
+        }
+        throw err; // re-throw other errors
+      }
     },
+    onError: (err) => console.error("PocketBase error:", err),
   });
+
   const { time } = useTimer({
-    initialTime: 20,
+    initialTime: 5,
     onTimerEnd: () => {
-      mutation.mutateAsync();
+      if (!mutation.isPending && !mutation.isSuccess) {
+        mutation.mutateAsync();
+      }
     },
   });
 
   return (
     <>
       <div className="flex mt-4 via-transparent rounded-md flex-col md:flex-row bg-gradient-to-t from-base-300 ">
+        {time}
         <div className="mx-auto w-fit ">
           {/*<button
             className="btn btn-block mt-4 btn-primary"
