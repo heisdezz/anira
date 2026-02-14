@@ -4,7 +4,7 @@
 
 import { PocketBaseTS } from "pocketbase-ts";
 import type { TypedPocketBase } from "pocketbase-types";
-
+const url = import.meta.env.VITE_PB_URL;
 export const pb = new PocketBaseTS(
-  "http://127.0.0.1:8090",
+  url || "http://127.0.0.1:8090",
 ) as Partial<TypedPocketBase>;

@@ -3,11 +3,13 @@ import SimpleInput from "@/components/SimpleInput";
 import { extract_pb_error } from "@/helpers/funcs";
 import { ClientResponseError } from "pocketbase";
 import { useForm } from "react-hook-form";
+import { useNavigate } from "react-router";
 import { toast } from "sonner";
 
 export default function index() {
   const form = useForm();
   const { register } = form;
+  const nav = useNavigate();
   const onSubmit = async (data: { username: string; password: string }) => {
     toast.promise(
       async () =>
@@ -16,7 +18,10 @@ export default function index() {
           .authWithPassword(data.username, data.password),
       {
         loading: "Logging in...",
-        success: "Logged in!",
+        success: () => {
+          nav("/");
+          return "Logged in!";
+        },
         error: extract_pb_error,
       },
     );
