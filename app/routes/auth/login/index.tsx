@@ -3,11 +3,13 @@ import SimpleInput from "@/components/SimpleInput";
 import { extract_pb_error } from "@/helpers/funcs";
 import { ClientResponseError } from "pocketbase";
 import { useForm } from "react-hook-form";
-import { useNavigate } from "react-router";
+import { useNavigate, Link } from "react-router";
 import { toast } from "sonner";
 
 export default function index() {
   const form = useForm();
+  console.log("PB URL:", import.meta.env.VITE_PB_URL);
+
   const { register } = form;
   const nav = useNavigate();
   const onSubmit = async (data: { username: string; password: string }) => {
@@ -68,9 +70,19 @@ export default function index() {
               Login
             </button>
           </div>
+          <p className="text-center text-sm">
+            Don't have an account?{" "}
+            <Link to="/auth/signup" className="link link-primary font-semibold">
+              Sign up
+            </Link>
+          </p>
           <div className="divider">OR</div>
           <div className="form-control">
-            <button type="button" className="btn btn-outline btn-block">
+            <button
+              disabled
+              type="button"
+              className="btn btn-outline btn-block"
+            >
               Sign in with Google
             </button>
           </div>

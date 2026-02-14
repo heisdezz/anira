@@ -1,16 +1,16 @@
 @import "tailwindcss";
 @plugin "daisyui" {
-    themes: all;
+  themes: all;
 }
 .embla {
-    overflow: hidden;
+  overflow: hidden;
 }
 .embla__container {
-    display: flex;
+  display: flex;
 }
 .embla__slide {
-    flex: 0 0 100%;
-    min-width: 0;
+  flex: 0 0 100%;
+  min-width: 0;
 }
 
 /*
@@ -27,3 +27,7 @@ body {
     color-scheme: dark;
   }
 }*/
+
+@utility container {
+  @apply !px-4;
+}

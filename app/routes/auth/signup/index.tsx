@@ -25,7 +25,7 @@ export default function index({}: SignupProps) {
         },
         {
           success: () => {
-            nav("/");
+            nav("/auth/login");
             return "Account Created";
           },
           error: extract_pb_error,
