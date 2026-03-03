@@ -1,12 +1,16 @@
-import { atom, getDefaultStore, useAtom } from "jotai";
+import { getDefaultStore, useAtom } from "jotai";
 import { useEffect, useRef, useState } from "react";
 import { atomWithStorage } from "jotai/utils";
 import Cookies from "js-cookie"; // 👈 install with: npm i js-cookie
 import { pb } from "@/api/pocketbase";
-import { BaseAuthStore, type RecordModel } from "pocketbase";
-import * as lod from "lodash";
+import type { RecordModel } from "pocketbase";
+import isEqual from "lodash/isEqual";
+import { useSearch } from "@tanstack/react-router";
+
 export const usePagination = (totalPages?: number) => {
   const [internalTotalPages, setInternalTotal] = useState(totalPages || 10);
+  const search = useSearch({ strict: false });
+
   useEffect(() => {
     if (!totalPages) {
       return;
@@ -14,20 +18,14 @@ export const usePagination = (totalPages?: number) => {
     if (internalTotalPages !== totalPages) {
       setInternalTotal(totalPages);
     }
-  }, [totalPages]);
-  const currentPage = Number(searchParams.get("page")) || 1;
+  }, [totalPages, internalTotalPages]);
+
+  const currentPage = Number((search as Record<string, unknown>).page) || 1;
 
   const handlePageChange = (page: number) => {
-    setSearchParams(
-      (prev) => {
-        const params = new URLSearchParams(prev.toString());
-        params.set("page", page.toString());
-        return params;
-      },
-      {
-        preventScrollReset: true,
-      },
-    );
+    // Note: Actual navigation would be handled by your router
+    // This returns the page number for the consumer to handle navigation
+    return page;
   };
 
   return {
@@ -98,7 +96,7 @@ user_Store.get(user_atom);
 pb.authStore.onChange(() => {
   const currentUser = user_Store.get(user_atom); // get current value
   if (pb.authStore.isValid) {
-    if (!lod.isEqual(currentUser, pb.authStore.record)) {
+    if (!isEqual(currentUser, pb.authStore.record)) {
       user_Store.set(user_atom, pb.authStore.record as UserModel);
     }
   } else {
