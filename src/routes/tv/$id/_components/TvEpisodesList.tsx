@@ -1,15 +1,16 @@
 import { useState } from "react";
 import type { TV_INFO_INTERFACE } from "@/constants";
-import { useParams } from "react-router";
 import { extract_episode_id } from "@/helpers/funcs";
-import { useNavigate } from "react-router";
+import { useNavigate, useParams } from "@tanstack/react-router";
 
 export default function TvEpisodesList({
   episodes,
 }: {
   episodes: TV_INFO_INTERFACE["episodes"];
 }) {
-  const { id, params, number } = useParams();
+  const { id, params, number } = useParams({
+    strict: false,
+  });
   const [currentPage, setCurrentPage] = useState(1);
   const episodesPerPage = 100;
 

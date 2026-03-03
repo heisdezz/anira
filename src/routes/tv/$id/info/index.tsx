@@ -1,3 +1,4 @@
+import { createFileRoute } from "@tanstack/react-router";
 import { client } from "@/api/client";
 import type { API_RESULTS, TV_INFO_INTERFACE } from "@/constants";
 import { useQuery } from "@tanstack/react-query";
@@ -6,10 +7,10 @@ import TvSkeleton from "../_components/Skeleton";
 import { scale_up_img } from "@/helpers/funcs";
 import type { AxiosError } from "axios";
 import ErrorPage from "../_components/ErrorPage";
-import { useParams } from "react-router";
+export const Route = createFileRoute("/tv/$id/info/")({ component: index });
 
-export default function index() {
-  const { id } = useParams<string>();
+function index() {
+  const { id } = Route.useParams();
   const query = useQuery<TV_INFO_INTERFACE>({
     queryKey: [id],
     queryFn: async () => {
