@@ -9,10 +9,18 @@
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
 import { Route as rootRouteImport } from './routes/__root'
+import { Route as TestRouteImport } from './routes/test'
 import { Route as AboutRouteImport } from './routes/about'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as StreamIndexRouteImport } from './routes/stream/index'
 import { Route as TvIdInfoIndexRouteImport } from './routes/tv/$id/info/index'
+import { Route as TvIdWatchEpisodeNumberIndexRouteImport } from './routes/tv/$id/watch/$episode/$number/index'
 
+const TestRoute = TestRouteImport.update({
+  id: '/test',
+  path: '/test',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const AboutRoute = AboutRouteImport.update({
   id: '/about',
   path: '/about',
@@ -23,44 +31,93 @@ const IndexRoute = IndexRouteImport.update({
   path: '/',
   getParentRoute: () => rootRouteImport,
 } as any)
+const StreamIndexRoute = StreamIndexRouteImport.update({
+  id: '/stream/',
+  path: '/stream/',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const TvIdInfoIndexRoute = TvIdInfoIndexRouteImport.update({
   id: '/tv/$id/info/',
   path: '/tv/$id/info/',
   getParentRoute: () => rootRouteImport,
 } as any)
+const TvIdWatchEpisodeNumberIndexRoute =
+  TvIdWatchEpisodeNumberIndexRouteImport.update({
+    id: '/tv/$id/watch/$episode/$number/',
+    path: '/tv/$id/watch/$episode/$number/',
+    getParentRoute: () => rootRouteImport,
+  } as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/about': typeof AboutRoute
+  '/test': typeof TestRoute
+  '/stream/': typeof StreamIndexRoute
   '/tv/$id/info/': typeof TvIdInfoIndexRoute
+  '/tv/$id/watch/$episode/$number/': typeof TvIdWatchEpisodeNumberIndexRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/about': typeof AboutRoute
+  '/test': typeof TestRoute
+  '/stream': typeof StreamIndexRoute
   '/tv/$id/info': typeof TvIdInfoIndexRoute
+  '/tv/$id/watch/$episode/$number': typeof TvIdWatchEpisodeNumberIndexRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
   '/about': typeof AboutRoute
+  '/test': typeof TestRoute
+  '/stream/': typeof StreamIndexRoute
   '/tv/$id/info/': typeof TvIdInfoIndexRoute
+  '/tv/$id/watch/$episode/$number/': typeof TvIdWatchEpisodeNumberIndexRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/about' | '/tv/$id/info/'
+  fullPaths:
+    | '/'
+    | '/about'
+    | '/test'
+    | '/stream/'
+    | '/tv/$id/info/'
+    | '/tv/$id/watch/$episode/$number/'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/about' | '/tv/$id/info'
-  id: '__root__' | '/' | '/about' | '/tv/$id/info/'
+  to:
+    | '/'
+    | '/about'
+    | '/test'
+    | '/stream'
+    | '/tv/$id/info'
+    | '/tv/$id/watch/$episode/$number'
+  id:
+    | '__root__'
+    | '/'
+    | '/about'
+    | '/test'
+    | '/stream/'
+    | '/tv/$id/info/'
+    | '/tv/$id/watch/$episode/$number/'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   AboutRoute: typeof AboutRoute
+  TestRoute: typeof TestRoute
+  StreamIndexRoute: typeof StreamIndexRoute
   TvIdInfoIndexRoute: typeof TvIdInfoIndexRoute
+  TvIdWatchEpisodeNumberIndexRoute: typeof TvIdWatchEpisodeNumberIndexRoute
 }
 
 declare module '@tanstack/react-router' {
   interface FileRoutesByPath {
+    '/test': {
+      id: '/test'
+      path: '/test'
+      fullPath: '/test'
+      preLoaderRoute: typeof TestRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/about': {
       id: '/about'
       path: '/about'
@@ -75,11 +132,25 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/stream/': {
+      id: '/stream/'
+      path: '/stream'
+      fullPath: '/stream/'
+      preLoaderRoute: typeof StreamIndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/tv/$id/info/': {
       id: '/tv/$id/info/'
       path: '/tv/$id/info'
       fullPath: '/tv/$id/info/'
       preLoaderRoute: typeof TvIdInfoIndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/tv/$id/watch/$episode/$number/': {
+      id: '/tv/$id/watch/$episode/$number/'
+      path: '/tv/$id/watch/$episode/$number'
+      fullPath: '/tv/$id/watch/$episode/$number/'
+      preLoaderRoute: typeof TvIdWatchEpisodeNumberIndexRouteImport
       parentRoute: typeof rootRouteImport
     }
   }
@@ -88,7 +159,10 @@ declare module '@tanstack/react-router' {
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   AboutRoute: AboutRoute,
+  TestRoute: TestRoute,
+  StreamIndexRoute: StreamIndexRoute,
   TvIdInfoIndexRoute: TvIdInfoIndexRoute,
+  TvIdWatchEpisodeNumberIndexRoute: TvIdWatchEpisodeNumberIndexRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)

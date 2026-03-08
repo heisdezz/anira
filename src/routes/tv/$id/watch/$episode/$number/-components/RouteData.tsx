@@ -1,9 +1,10 @@
-import VideoPlayer2 from "@/components/VideoPlayer2.client";
+import VideoPlayer2 from "#/components/VideoPlayer2";
+import TvRecommendations from "#/routes/tv/$id/_components/Recommendations";
+import TvDetails from "#/routes/tv/$id/_components/TvDetails";
+import TvEpisodesList from "#/routes/tv/$id/_components/TvEpisodesList";
+
 import type { TV_INFO_INTERFACE } from "@/constants";
-import TvRecommendations from "@/routes/tv/[id]/_components/Recommendations";
-import TvDetails from "@/routes/tv/[id]/_components/TvDetails";
-import TvEpisodesList from "@/routes/tv/[id]/_components/TvEpisodesList";
-import { useParams } from "react-router";
+import { useParams } from "@tanstack/react-router";
 
 export default function RouteData({
   clean,
@@ -12,7 +13,9 @@ export default function RouteData({
   clean: string;
   tv_data: TV_INFO_INTERFACE;
 }) {
-  const { id, episode, number } = useParams();
+  const { id, episode, number } = useParams({
+    strict: false,
+  });
 
   return (
     <div>

@@ -1,6 +1,6 @@
+import { useNavigate } from "@tanstack/react-router";
 import { SearchIcon } from "lucide-react";
 import { useForm } from "react-hook-form";
-import { useNavigate } from "react-router";
 import { toast } from "sonner";
 
 export default function SearchBar() {
@@ -13,7 +13,7 @@ export default function SearchBar() {
 
   const submit = (data: any) => {
     console.log("Search term:", data.search);
-    nav(`/search/${data.search}`);
+    nav({ to: `/search/${data.search}` });
   };
 
   const onError = (errors: any) => {

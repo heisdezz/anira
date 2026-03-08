@@ -3,14 +3,16 @@ import type { TV_INFO_INTERFACE } from "@/constants";
 import { useUser } from "@/helpers/hooks";
 import type { HistoryModel } from "@/helpers/types";
 import { useMutation } from "@tanstack/react-query";
+import { useLocation, useParams } from "@tanstack/react-router";
 import { Bookmark } from "lucide-react";
 import { ClientResponseError } from "pocketbase";
-import { useLocation, useParams } from "react-router";
 import { useTimer } from "react-timer-hook-ts";
 
 export default function TvDetails({ info }: { info: TV_INFO_INTERFACE }) {
   const [user] = useUser();
-  const { episode, number } = useParams();
+  const { episode, number } = useParams({
+    strict: false,
+  });
   const url = useLocation();
   // const mutation = useMutation({
   //   mutationFn: async () => {

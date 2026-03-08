@@ -2,7 +2,6 @@ import { client } from "@/api/client";
 import type { STREAM_RESPONSE } from "@/constants";
 import { useQuery } from "@tanstack/react-query";
 import { useEffect, useRef } from "react";
-import { useParams } from "react-router";
 import videojs from "video.js";
 import "@videojs/http-streaming";
 import "video.js/dist/video-js.css";
@@ -21,9 +20,12 @@ import "@videojs/themes/dist/forest/index.css";
 // Sea
 import "@videojs/themes/dist/sea/index.css";
 import DownloadLinks from "./DownloadLinks";
+import { useParams } from "@tanstack/react-router";
 
 export default function SimplePlayer() {
-  const { id, episode } = useParams();
+  const { id, episode } = useParams({
+    strict: false,
+  });
   const containerRef = useRef<HTMLDivElement | null>(null);
   const playerRef = useRef<any>(null);
   (window as any).VIDEOJS_NO_DYNAMIC_STYLE = true;

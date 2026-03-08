@@ -35,13 +35,7 @@ export default function TvEpisodesList({
               <div
                 onClick={() => {
                   const ep_id = extract_episode_id(episode.id);
-                  nav(`/tv/${id}/watch/${ep_id}/${episode.number}`, {
-                    // params: {
-                    //   id: id,
-                    //   episode: String(ep_id),
-                    //   number: String(episode.number),
-                    // },
-                  });
+                  nav({ to: `/tv/${id}/watch/${ep_id}/${episode.number}` });
                 }}
                 key={episode.id}
                 className="p-2 rounded-md w-[100px] btn btn-active btn-accent btn-soft"
@@ -54,13 +48,7 @@ export default function TvEpisodesList({
             <div
               onClick={() => {
                 const ep_id = extract_episode_id(episode.id);
-                nav(`/tv/${id}/watch/${ep_id}/${episode.number}`, {
-                  // params: {
-                  //   id: id,
-                  //   episode: String(ep_id),
-                  //   number: String(episode.number),
-                  // },
-                });
+                nav({ to: `/tv/${id}/watch/${ep_id}/${episode.number}` });
               }}
               key={episode.id}
               className="p-2 rounded-md w-[100px] btn  btn-accent btn-soft"
