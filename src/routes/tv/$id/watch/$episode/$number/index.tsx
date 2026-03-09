@@ -8,7 +8,6 @@ import TvDetails from "../../../-components/TvDetails";
 import TvRecommendations from "../../../-components/Recommendations";
 export const Route = createFileRoute("/tv/$id/watch/$episode/$number/")({
   component: index,
-  ssr: true,
   errorComponent: ({ error }) => (
     <div className="min-h-screen grid place-items-center">error ocured</div>
   ),
