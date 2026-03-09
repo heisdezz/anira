@@ -1,17 +1,36 @@
-Welcome to your new TanStack Start app! 
+# Anira - Anime Streaming Platform
 
-# Getting Started
+A modern anime streaming web application built with TanStack Start, featuring dynamic video playback, episode listings, and detailed anime information.
 
-To run this application:
+## Features
+
+- **Browse Anime**: Search and explore a comprehensive anime catalog
+- **Stream Episodes**: Watch anime episodes with HLS streaming and quality selection
+- **Episode Management**: Navigate through episodes with episode listings and recommendations
+- **Responsive Design**: Beautiful UI with Tailwind CSS and daisyUI themes
+
+## Tech Stack
+
+- **Framework**: [TanStack Start](https://tanstack.com/start) - Full-stack React framework
+- **Routing**: [TanStack Router](https://tanstack.com/router) - File-based routing with SSR
+- **Data Fetching**: [TanStack Query](https://tanstack.com/query) - Server state management
+- **Styling**: [Tailwind CSS](https://tailwindcss.com/) + [daisyUI](https://daisyui.com/) - Component library
+- **Runtime**: [Bun](https://bun.sh/) - Fast all-in-one JavaScript runtime
+
+## Getting Started
+
+Install dependencies and run the development server:
 
 ```bash
 bun install
 bun --bun run dev
 ```
 
-# Building For Production
+The app will be available at `http://localhost:5173`
 
-To build this application for production:
+## Building For Production
+
+Build the application for production:
 
 ```bash
 bun --bun run build
@@ -19,7 +38,7 @@ bun --bun run build
 
 ## Testing
 
-This project uses [Vitest](https://vitest.dev/) for testing. You can run the tests with:
+Run tests with [Vitest](https://vitest.dev/):
 
 ```bash
 bun --bun run test
@@ -27,16 +46,7 @@ bun --bun run test
 
 ## Styling
 
-This project uses [Tailwind CSS](https://tailwindcss.com/) for styling.
-
-### Removing Tailwind CSS
-
-If you prefer not to use Tailwind CSS:
-
-1. Remove the demo pages in `src/routes/demo/`
-2. Replace the Tailwind import in `src/styles.css` with your own styles
-3. Remove `tailwindcss()` from the plugins array in `vite.config.ts`
-4. Uninstall the packages: `bun install @tailwindcss/vite tailwindcss -D`
+This project uses [Tailwind CSS](https://tailwindcss.com/) with [daisyUI](https://daisyui.com/) for component styling. A custom "anira" theme is defined in `src/theme.css`.
 
 
 
@@ -182,12 +192,42 @@ function PeopleComponent() {
 
 Loaders simplify your data fetching logic dramatically. Check out more information in the [Loader documentation](https://tanstack.com/router/latest/docs/framework/react/guide/data-loading#loader-parameters).
 
-# Demo files
+## Project Structure
 
-Files prefixed with `demo` can be safely deleted. They are there to provide a starting point for you to play around with the features you've installed.
+```
+src/
+├── routes/                 # File-based routes (TanStack Router)
+│   ├── __root.tsx         # Root layout
+│   ├── index.tsx          # Home page
+│   └── tv/                # TV/anime routes
+│       ├── $id/           # Anime detail pages
+│       └── [id]/watch/    # Episode watch pages
+├── components/            # Reusable React components
+├── api/                   # API integrations
+├── styles.css            # Global styles with Tailwind
+├── theme.css             # Custom daisyUI theme
+└── constants/            # Constants and types
+```
 
-# Learn More
+## Environment Setup
 
-You can learn more about all of the offerings from TanStack in the [TanStack documentation](https://tanstack.com).
+Create a `.env` file in the root directory for any required API endpoints:
 
-For TanStack Start specific documentation, visit [TanStack Start](https://tanstack.com/start).
+```bash
+# Example environment variables
+VITE_API_BASE_URL=https://your-anime-api.com
+```
+
+## Development Tips
+
+- Hot Module Replacement (HMR) is enabled for fast development
+- Server-side rendering (SSR) is configured for optimal performance
+- Components use TanStack Router's `useParams()` and `useLoaderData()` hooks
+- Video streaming uses video.js with HLS quality selection
+
+## Learn More
+
+- [TanStack Documentation](https://tanstack.com)
+- [TanStack Start Guide](https://tanstack.com/start)
+- [Tailwind CSS](https://tailwindcss.com/)
+- [daisyUI Components](https://daisyui.com/)
