@@ -4,6 +4,7 @@
 @plugin "daisyui" {
   themes: all;
 }
+@import "./theme.css";
 @theme {
   --font-sans: "Manrope", ui-sans-serif, system-ui, sans-serif;
 }

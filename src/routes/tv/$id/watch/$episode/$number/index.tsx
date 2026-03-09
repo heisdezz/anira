@@ -5,7 +5,7 @@ import TvWatchSkeleton from "../../../_components/TvWatchSkeleton";
 // import SimplePlayer from "@/components/VideoPlayer.client";
 import { pb } from "@/api/pocketbase";
 import { useUser } from "@/helpers/hooks";
-import { createFileRoute } from "@tanstack/react-router";
+import { ClientOnly, createFileRoute } from "@tanstack/react-router";
 import RouteData from "./-components/RouteData";
 import SimplePlayer from "#/components/VideoPlayer.client";
 import TvEpisodesList from "../../../_components/TvEpisodesList";
@@ -15,6 +15,9 @@ import TvRecommendations from "../../../_components/Recommendations";
 export const Route = createFileRoute("/tv/$id/watch/$episode/$number/")({
   component: index,
   ssr: true,
+  errorComponent: ({ error }) => (
+    <div className="min-h-screen grid place-items-center">error ocured</div>
+  ),
   loader: async ({ params }) => {
     const { id } = params;
     console.log("server loader");
@@ -30,21 +33,7 @@ export const Route = createFileRoute("/tv/$id/watch/$episode/$number/")({
 function index() {
   const { id, episode, number } = Route.useParams();
   const loader_data = Route.useLoaderData();
-  // const query = useQuery<TV_INFO_INTERFACE>({
-  //   queryKey: [id],
-  //   queryFn: async () => {
-  //     let resp = await client.get("info", {
-  //       params: {
-  //         id,
-  //       },
-  //     });
-  //     return resp.data;
-  //   },
-  // });
-
   // return <>{JSON.stringify(loader_data)}</>;
-  // if (query.isLoading) return <TvWatchSkeleton />;
-
   const tv_data: any = loader_data;
   const clean = id.replace(/-\d+$/, "").replace(/-/g, " ");
   return (
@@ -56,11 +45,34 @@ function index() {
               <span>Watch:</span> {clean} Episode:{number}
             </div>
             <div className="w-full aspect-video ">
-              <SimplePlayer />
+              <Suspense
+                key={episode}
+                fallback={
+                  <div className="skeleton aspect-video w-full bg-primary/5">
+                    {/*Loading...*/}
+                  </div>
+                }
+              >
+                <>
+                  <ClientOnly
+                    fallback={
+                      <div className="skeleton aspect-video w-full bg-primary/5"></div>
+                    }
+                  >
+                    <SimplePlayer />
+                  </ClientOnly>
+                </>
+              </Suspense>
               {/*<VideoPlayer2 />*/}
             </div>
-            <TvEpisodesList episodes={tv_data.episodes || []} />
-            <Suspense>
+            {/*<TvEpisodesList episodes={tv_data.episodes || []} />*/}
+            <Suspense
+              fallback={
+                <div className="skeleton w-full bg-primary/5">
+                  {/*Loading...*/}
+                </div>
+              }
+            >
               <TvDetails info={tv_data} />
             </Suspense>
           </div>
