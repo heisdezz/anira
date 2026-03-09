@@ -27,4 +27,4 @@ const alphabet = "abcdefghijklmnopqrstuvwxyz0123456789";
 export const generateId = customAlphabet(alphabet, 15); // 26-char ULID length
 
 const id = generateId();
-console.log(id); // e.g. "01hfzx07xh5p4rmz0y2amt8r2g"
+// console.log(id); // e.g. "01hfzx07xh5p4rmz0y2amt8r2g"
