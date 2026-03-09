@@ -1,7 +1,7 @@
 import VideoPlayer2 from "#/components/VideoPlayer2";
-import TvRecommendations from "#/routes/tv/$id/_components/Recommendations";
-import TvDetails from "#/routes/tv/$id/_components/TvDetails";
-import TvEpisodesList from "#/routes/tv/$id/_components/TvEpisodesList";
+import TvRecommendations from "#/routes/tv/$id/-components/Recommendations";
+import TvDetails from "#/routes/tv/$id/-components/TvDetails";
+import TvEpisodesList from "#/routes/tv/$id/-components/TvEpisodesList";
 
 import type { TV_INFO_INTERFACE } from "@/constants";
 import { useParams } from "@tanstack/react-router";

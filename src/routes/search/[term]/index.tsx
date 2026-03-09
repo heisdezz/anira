@@ -1,3 +1,4 @@
+import { createFileRoute } from "@tanstack/react-router";
 import { client } from "@/api/client";
 import Card from "@/components/Card";
 import EmptyList from "@/components/EmptyList";
@@ -6,10 +7,13 @@ import SkeletonCard from "@/components/SkeletonCard";
 import type { API_RESULTS, QUERY_RESULTS } from "@/constants";
 import { usePagination } from "@/helpers/hooks";
 import { useQuery } from "@tanstack/react-query";
-import { useParams } from "react-router";
 
-export default function index() {
-  const { term } = useParams<string>();
+export const Route = createFileRoute("/search/term/")({
+  component: RouteComponent,
+});
+
+function RouteComponent() {
+  const { term } = Route.useParams();
   const { currentPage } = usePagination();
   const query = useQuery<API_RESULTS<QUERY_RESULTS>>({
     queryKey: ["search", term, currentPage],

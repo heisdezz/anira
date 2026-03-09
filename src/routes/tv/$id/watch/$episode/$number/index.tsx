@@ -1,17 +1,11 @@
 import { client } from "@/api/client";
 import type { TV_INFO_INTERFACE } from "@/constants";
-import { useQuery } from "@tanstack/react-query";
-import TvWatchSkeleton from "../../../_components/TvWatchSkeleton";
 // import SimplePlayer from "@/components/VideoPlayer.client";
-import { pb } from "@/api/pocketbase";
-import { useUser } from "@/helpers/hooks";
 import { ClientOnly, createFileRoute } from "@tanstack/react-router";
-import RouteData from "./-components/RouteData";
 import SimplePlayer from "#/components/VideoPlayer.client";
-import TvEpisodesList from "../../../_components/TvEpisodesList";
 import { Suspense } from "react";
-import TvDetails from "../../../_components/TvDetails";
-import TvRecommendations from "../../../_components/Recommendations";
+import TvDetails from "../../../-components/TvDetails";
+import TvRecommendations from "../../../-components/Recommendations";
 export const Route = createFileRoute("/tv/$id/watch/$episode/$number/")({
   component: index,
   ssr: true,

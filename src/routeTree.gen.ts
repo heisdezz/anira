@@ -11,8 +11,11 @@
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as TestRouteImport } from './routes/test'
 import { Route as AboutRouteImport } from './routes/about'
+import { Route as ProfileRouteRouteImport } from './routes/profile/route'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as StreamIndexRouteImport } from './routes/stream/index'
+import { Route as ProfileIndexRouteImport } from './routes/profile/index'
+import { Route as SearchChar91termChar93IndexRouteImport } from './routes/search/[term]/index'
 import { Route as TvIdInfoIndexRouteImport } from './routes/tv/$id/info/index'
 import { Route as TvIdWatchEpisodeNumberIndexRouteImport } from './routes/tv/$id/watch/$episode/$number/index'
 
@@ -26,6 +29,11 @@ const AboutRoute = AboutRouteImport.update({
   path: '/about',
   getParentRoute: () => rootRouteImport,
 } as any)
+const ProfileRouteRoute = ProfileRouteRouteImport.update({
+  id: '/profile',
+  path: '/profile',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
@@ -36,6 +44,17 @@ const StreamIndexRoute = StreamIndexRouteImport.update({
   path: '/stream/',
   getParentRoute: () => rootRouteImport,
 } as any)
+const ProfileIndexRoute = ProfileIndexRouteImport.update({
+  id: '/',
+  path: '/',
+  getParentRoute: () => ProfileRouteRoute,
+} as any)
+const SearchChar91termChar93IndexRoute =
+  SearchChar91termChar93IndexRouteImport.update({
+    id: '/search/term/',
+    path: '/search/term/',
+    getParentRoute: () => rootRouteImport,
+  } as any)
 const TvIdInfoIndexRoute = TvIdInfoIndexRouteImport.update({
   id: '/tv/$id/info/',
   path: '/tv/$id/info/',
@@ -50,9 +69,12 @@ const TvIdWatchEpisodeNumberIndexRoute =
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/profile': typeof ProfileRouteRouteWithChildren
   '/about': typeof AboutRoute
   '/test': typeof TestRoute
+  '/profile/': typeof ProfileIndexRoute
   '/stream/': typeof StreamIndexRoute
+  '/search/term/': typeof SearchChar91termChar93IndexRoute
   '/tv/$id/info/': typeof TvIdInfoIndexRoute
   '/tv/$id/watch/$episode/$number/': typeof TvIdWatchEpisodeNumberIndexRoute
 }
@@ -60,16 +82,21 @@ export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/about': typeof AboutRoute
   '/test': typeof TestRoute
+  '/profile': typeof ProfileIndexRoute
   '/stream': typeof StreamIndexRoute
+  '/search/term': typeof SearchChar91termChar93IndexRoute
   '/tv/$id/info': typeof TvIdInfoIndexRoute
   '/tv/$id/watch/$episode/$number': typeof TvIdWatchEpisodeNumberIndexRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/profile': typeof ProfileRouteRouteWithChildren
   '/about': typeof AboutRoute
   '/test': typeof TestRoute
+  '/profile/': typeof ProfileIndexRoute
   '/stream/': typeof StreamIndexRoute
+  '/search/term/': typeof SearchChar91termChar93IndexRoute
   '/tv/$id/info/': typeof TvIdInfoIndexRoute
   '/tv/$id/watch/$episode/$number/': typeof TvIdWatchEpisodeNumberIndexRoute
 }
@@ -77,9 +104,12 @@ export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
   fullPaths:
     | '/'
+    | '/profile'
     | '/about'
     | '/test'
+    | '/profile/'
     | '/stream/'
+    | '/search/term/'
     | '/tv/$id/info/'
     | '/tv/$id/watch/$episode/$number/'
   fileRoutesByTo: FileRoutesByTo
@@ -87,24 +117,31 @@ export interface FileRouteTypes {
     | '/'
     | '/about'
     | '/test'
+    | '/profile'
     | '/stream'
+    | '/search/term'
     | '/tv/$id/info'
     | '/tv/$id/watch/$episode/$number'
   id:
     | '__root__'
     | '/'
+    | '/profile'
     | '/about'
     | '/test'
+    | '/profile/'
     | '/stream/'
+    | '/search/term/'
     | '/tv/$id/info/'
     | '/tv/$id/watch/$episode/$number/'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  ProfileRouteRoute: typeof ProfileRouteRouteWithChildren
   AboutRoute: typeof AboutRoute
   TestRoute: typeof TestRoute
   StreamIndexRoute: typeof StreamIndexRoute
+  SearchChar91termChar93IndexRoute: typeof SearchChar91termChar93IndexRoute
   TvIdInfoIndexRoute: typeof TvIdInfoIndexRoute
   TvIdWatchEpisodeNumberIndexRoute: typeof TvIdWatchEpisodeNumberIndexRoute
 }
@@ -125,6 +162,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AboutRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/profile': {
+      id: '/profile'
+      path: '/profile'
+      fullPath: '/profile'
+      preLoaderRoute: typeof ProfileRouteRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/': {
       id: '/'
       path: '/'
@@ -137,6 +181,20 @@ declare module '@tanstack/react-router' {
       path: '/stream'
       fullPath: '/stream/'
       preLoaderRoute: typeof StreamIndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/profile/': {
+      id: '/profile/'
+      path: '/'
+      fullPath: '/profile/'
+      preLoaderRoute: typeof ProfileIndexRouteImport
+      parentRoute: typeof ProfileRouteRoute
+    }
+    '/search/term/': {
+      id: '/search/term/'
+      path: '/search/term'
+      fullPath: '/search/term/'
+      preLoaderRoute: typeof SearchChar91termChar93IndexRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/tv/$id/info/': {
@@ -156,11 +214,25 @@ declare module '@tanstack/react-router' {
   }
 }
 
+interface ProfileRouteRouteChildren {
+  ProfileIndexRoute: typeof ProfileIndexRoute
+}
+
+const ProfileRouteRouteChildren: ProfileRouteRouteChildren = {
+  ProfileIndexRoute: ProfileIndexRoute,
+}
+
+const ProfileRouteRouteWithChildren = ProfileRouteRoute._addFileChildren(
+  ProfileRouteRouteChildren,
+)
+
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  ProfileRouteRoute: ProfileRouteRouteWithChildren,
   AboutRoute: AboutRoute,
   TestRoute: TestRoute,
   StreamIndexRoute: StreamIndexRoute,
+  SearchChar91termChar93IndexRoute: SearchChar91termChar93IndexRoute,
   TvIdInfoIndexRoute: TvIdInfoIndexRoute,
   TvIdWatchEpisodeNumberIndexRoute: TvIdWatchEpisodeNumberIndexRoute,
 }

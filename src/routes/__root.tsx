@@ -4,6 +4,7 @@ import { TanStackDevtools } from "@tanstack/react-devtools";
 import Footer from "../components/Footer";
 import Header from "../components/Header";
 import "../styles.css";
+import "../theme.css";
 
 import appCss from "../styles.css?url";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
@@ -33,6 +34,7 @@ export const Route = createRootRoute({
     ],
   }),
   shellComponent: RootDocument,
+  notFoundComponent: () => <>not found</>,
 });
 
 const queryClient = new QueryClient({

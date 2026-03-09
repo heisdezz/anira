@@ -2,11 +2,11 @@ import { createFileRoute } from "@tanstack/react-router";
 import { client } from "@/api/client";
 import type { API_RESULTS, TV_INFO_INTERFACE } from "@/constants";
 import { useQuery } from "@tanstack/react-query";
-import TvInfo from "../_components/TvInfo";
-import TvSkeleton from "../_components/Skeleton";
+import TvInfo from "../-components/TvInfo";
+import TvSkeleton from "../-components/Skeleton";
 import { scale_up_img } from "@/helpers/funcs";
 import type { AxiosError } from "axios";
-import ErrorPage from "../_components/ErrorPage";
+import ErrorPage from "../-components/ErrorPage";
 export const Route = createFileRoute("/tv/$id/info/")({ component: index });
 
 function index() {

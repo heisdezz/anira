@@ -1,16 +1,20 @@
 import { pb } from "@/api/pocketbase";
 import { useUser } from "@/helpers/hooks";
 import { useEffect, useLayoutEffect } from "react";
-import { useNavigate } from "react-router";
-import WatchHistory from "./_components.tsx/WatchHistory";
-import Bookmarks from "./_components.tsx/BookMarks";
+import WatchHistory from "./-components.tsx/WatchHistory";
+import Bookmarks from "./-components.tsx/BookMarks";
+import { useNavigate, createFileRoute } from "@tanstack/react-router";
 
-export default function index() {
+export const Route = createFileRoute("/profile/")({
+  component: RouteComponent,
+});
+
+function RouteComponent() {
   const [user] = useUser();
   const nav = useNavigate();
   useLayoutEffect(() => {
     if (!user) {
-      nav("/auth/login");
+      nav({ to: "/auth/login" });
     }
   }, [user]);
   if (!user) return;
