@@ -33,7 +33,7 @@ function index() {
     <>
       <div className="">
         <div className="container mx-auto flex gap-2">
-          <div className="flex-1 ">
+          <div className="flex-1 mt-4">
             <div className=" p-4 rounded-md mb-4 bg-base-200 ">
               <span>Watch:</span> {clean} Episode:{number}
             </div>

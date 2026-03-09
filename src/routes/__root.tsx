@@ -6,6 +6,7 @@ import appCss from "../styles.css?url";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import NavBar from "#/components/NavBar";
 import Footer from "#/components/Footer";
+import AppLayout from "#/components/layouts/AppLayout";
 
 export const Route = createRootRoute({
   head: () => ({
@@ -46,11 +47,13 @@ function RootDocument({ children }: { children: React.ReactNode }) {
         <HeadContent />
       </head>
       <body className="">
-        <NavBar />
-        <QueryClientProvider client={queryClient}>
-          {children}
-        </QueryClientProvider>
-        <Footer />
+        <AppLayout>
+          <NavBar />
+          <QueryClientProvider client={queryClient}>
+            {children}
+          </QueryClientProvider>
+          <Footer />
+        </AppLayout>
         <TanStackDevtools
           config={{
             position: "bottom-right",

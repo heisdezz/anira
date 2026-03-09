@@ -31,7 +31,7 @@ export default function SearchBar() {
         <input
           {...search_form.register("search", {
             required: true,
-            validate: (value) => value.length > 3 || "Too short",
+            validate: (value) => value.length > 2 || "Too short",
           })}
           type="search"
           className="input input-primary join-item flex-1"

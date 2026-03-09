@@ -22,7 +22,7 @@ export default function GridContainer(props: GridContainerProps) {
           </div>
         )}
       </div>
-      <section className="mt-4 min-h-[520px] grid grid-cols-[repeat(auto-fill,minmax(150px,1fr))] md:grid-cols-[repeat(auto-fill,minmax(220px,1fr))] gap-2">
+      <section className="mt-4  grid grid-cols-[repeat(auto-fill,minmax(150px,1fr))] md:grid-cols-[repeat(auto-fill,minmax(220px,1fr))] gap-2">
         {props.children}
       </section>
 

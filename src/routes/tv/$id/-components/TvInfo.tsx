@@ -42,9 +42,9 @@ export default function TvInfo({ info }: { info: TV_INFO_INTERFACE }) {
   });
   return (
     <div className="container mx-auto flex gap-2 min-h-dvh">
-      <div className="flex-1 bg-gradient-to-t ">
+      <div className="flex-1 bg-gradient-to-t  ">
         <div className="flex flex-col md:flex-row bg-gradient-to-t from-base-200 via-transparent shadow">
-          <div className="mx-auto w-fit ">
+          <div className="mx-auto w-fit  ">
             <img
               src={info.image}
               className="w-3xs aspect-[9/12] self-start "
